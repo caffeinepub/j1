@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.625rem;
+    /* Dark-only design — all tokens tuned for dark mode */
+    --background: 0.1 0 0;
+    --foreground: 0.96 0 0;
+    --card: 0.17 0 0;
+    --card-foreground: 0.96 0 0;
+    --popover: 0.17 0 0;
+    --popover-foreground: 0.96 0 0;
+    --primary: 0.82 0.185 90;
+    --primary-foreground: 0.12 0 0;
+    --secondary: 0.22 0 0;
+    --secondary-foreground: 0.96 0 0;
+    --muted: 0.22 0 0;
+    --muted-foreground: 0.67 0 0;
+    --accent: 0.22 0 0;
+    --accent-foreground: 0.96 0 0;
+    --destructive: 0.48 0.17 25;
+    --destructive-foreground: 0.96 0 0;
+    --border: 0.22 0 0;
+    --input: 0.22 0 0;
+    --ring: 0.82 0.185 90;
+    --chart-1: 0.82 0.185 90;
+    --chart-2: 0.6 0.118 184;
+    --chart-3: 0.48 0.17 25;
+    --chart-4: 0.7 0.15 120;
+    --chart-5: 0.7 0.12 200;
+    --sidebar: 0.13 0 0;
+    --sidebar-foreground: 0.96 0 0;
+    --sidebar-primary: 0.82 0.185 90;
+    --sidebar-primary-foreground: 0.12 0 0;
+    --sidebar-accent: 0.22 0 0;
+    --sidebar-accent-foreground: 0.96 0 0;
+    --sidebar-border: 0.22 0 0;
+    --sidebar-ring: 0.82 0.185 90;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+}
