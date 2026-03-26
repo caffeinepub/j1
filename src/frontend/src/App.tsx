@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
-import { useEffect, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 import { useInternetIdentity } from "./hooks/useInternetIdentity";
@@ -9,22 +9,10 @@ import { AdminDashboard } from "./pages/AdminDashboard";
 import { LoginPage } from "./pages/LoginPage";
 import { UserPanel } from "./pages/UserPanel";
 
-type Page = "dashboard" | "user";
-
 export default function App() {
   const { identity, isInitializing } = useInternetIdentity();
   const isAuthenticated = !!identity;
   const { data: isAdmin, isLoading: isAdminLoading } = useIsAdmin();
-  const [currentPage, setCurrentPage] = useState<Page>("user");
-
-  // Route to admin dashboard automatically if admin
-  useEffect(() => {
-    if (isAdmin) {
-      setCurrentPage("dashboard");
-    } else if (isAdmin === false) {
-      setCurrentPage("user");
-    }
-  }, [isAdmin]);
 
   if (isInitializing) {
     return (
@@ -84,18 +72,40 @@ export default function App() {
       className="min-h-screen flex flex-col"
       style={{ backgroundColor: "oklch(0.10 0 0)" }}
     >
-      <Navbar
-        isAdmin={!!isAdmin}
-        currentPage={currentPage}
-        onNavigate={(page) => {
-          // Only allow navigating to dashboard if admin
-          if (page === "dashboard" && !isAdmin) return;
-          setCurrentPage(page);
-        }}
-      />
+      <Navbar isAdmin={!!isAdmin} />
       <div className="flex-1">
-        {currentPage === "dashboard" && isAdmin ? (
-          <AdminDashboard />
+        {isAdmin ? (
+          <Tabs defaultValue="admin" className="w-full">
+            <div
+              className="border-b border-border"
+              style={{ backgroundColor: "oklch(0.13 0 0)" }}
+            >
+              <div className="max-w-6xl mx-auto px-4">
+                <TabsList className="h-auto bg-transparent p-0 gap-0 rounded-none">
+                  <TabsTrigger
+                    value="admin"
+                    data-ocid="nav.admin_panel.tab"
+                    className="relative px-5 py-3 text-sm font-semibold rounded-none border-b-2 border-transparent bg-transparent text-muted-foreground transition-colors data-[state=active]:text-primary data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  >
+                    Admin Panel
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="user"
+                    data-ocid="nav.user_panel.tab"
+                    className="relative px-5 py-3 text-sm font-semibold rounded-none border-b-2 border-transparent bg-transparent text-muted-foreground transition-colors data-[state=active]:text-primary data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  >
+                    User Panel
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+            </div>
+            <TabsContent value="admin" className="mt-0">
+              <AdminDashboard />
+            </TabsContent>
+            <TabsContent value="user" className="mt-0">
+              <UserPanel />
+            </TabsContent>
+          </Tabs>
         ) : (
           <UserPanel />
         )}

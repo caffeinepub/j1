@@ -1,33 +1,21 @@
-# J1 Market Results App
+# J1
 
 ## Current State
-New project. No existing application files.
+Separate AdminDashboard and UserPanel pages. Admins auto-routed to AdminDashboard.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Role-based authentication (admin / user) via Caffeine authorization component
-- Results data model: id, market_name, time, result_value, date
-- Admin panel: CRUD operations for market results (add, edit, delete)
-- User panel: read-only live results view with auto-refresh
-- Login/logout flow with session management
+- Combined tabbed view for admins with Admin Panel and User Panel tabs
 
 ### Modify
-N/A
+- App.tsx: admins see tabs to switch between both panels
+- Regular users still only see UserPanel
 
 ### Remove
-N/A
+- Nothing
 
 ## Implementation Plan
-1. Select `authorization` Caffeine component for role-based access
-2. Generate Motoko backend with:
-   - Results store (stable var array of Result records)
-   - Admin-only functions: addResult, updateResult, deleteResult
-   - Public function: getResults (returns all results)
-   - Seed a default admin principal on first deploy
-3. Frontend:
-   - Login page (Internet Identity or principal-based)
-   - Admin dashboard: table of results with add/edit/delete modals
-   - User dashboard: card grid of live results with 5-second polling auto-refresh
-   - Black background, yellow accent (#FACC15) theme throughout
-   - Mobile-responsive layout
+1. In App.tsx, when admin, render tabs (Admin Panel / User Panel)
+2. Use shadcn Tabs to switch between AdminDashboard and UserPanel
+3. Users see only UserPanel as before
